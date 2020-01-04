@@ -1,5 +1,5 @@
 import React, { Component, Fragment, createRef } from 'react';
-import classes from '../css/GameRoom/gameRoom.css';
+import classes from '../css/GameRoom/canvas.css';
 
 class Canvas extends Component {
   constructor(props) {

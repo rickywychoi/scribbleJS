@@ -125,7 +125,9 @@ function (_Component) {
       var _this3 = this;
 
       console.log(this.state);
-      return this.props.activeUser && __jsx(react__WEBPACK_IMPORTED_MODULE_9__["Fragment"], null, __jsx("div", {
+      return this.props.activeUser && __jsx(react__WEBPACK_IMPORTED_MODULE_9__["Fragment"], null, __jsx("section", {
+        className: "col-md-4 postion-relative d-flex flex-wrap h-100 align-items-start align-content-between bg-white px-0"
+      }, __jsx("div", {
         className: "border-bottom border-gray w-100 d-flex align-items-center bg-white",
         style: {
           height: 90
@@ -174,7 +176,7 @@ function (_Component) {
         style: {
           resize: 'none'
         }
-      })));
+      }))));
     }
   }]);
 

@@ -385,10 +385,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_corejs2_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/defineProperty */ "./node_modules/@babel/runtime-corejs2/helpers/esm/defineProperty.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _containers_Layout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../containers/Layout */ "./containers/Layout.js");
-/* harmony import */ var _components_Chat__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/Chat */ "./components/Chat.js");
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! next/router */ "next/router");
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _containers_Layout__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../containers/Layout */ "./containers/Layout.js");
+/* harmony import */ var _components_Chat__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/Chat */ "./components/Chat.js");
 
 var __jsx = react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement;
+
 
 
 
@@ -398,7 +401,8 @@ class IndexPage extends react__WEBPACK_IMPORTED_MODULE_1__["Component"] {
     super(...args);
 
     Object(_babel_runtime_corejs2_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_0__["default"])(this, "state", {
-      user: null
+      user: null,
+      roomID: ''
     });
 
     Object(_babel_runtime_corejs2_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_0__["default"])(this, "handleKeyUp", event => {
@@ -409,11 +413,30 @@ class IndexPage extends react__WEBPACK_IMPORTED_MODULE_1__["Component"] {
         });
       }
     });
+
+    Object(_babel_runtime_corejs2_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_0__["default"])(this, "createRoom", () => {
+      let url = '';
+      let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+      for (let i = 0; i < 30; i++) {
+        url += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+
+      this.setState({
+        roomID: url
+      });
+    });
+
+    Object(_babel_runtime_corejs2_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_0__["default"])(this, "toCreatedRoom", roomID => {
+      let user = this.state.user;
+      next_router__WEBPACK_IMPORTED_MODULE_2___default.a.push(`/room/${roomID}?activeUser=${user}`);
+    });
   }
 
   render() {
     const {
-      user
+      user,
+      roomID
     } = this.state;
     const nameInputStyles = {
       background: 'transparent',
@@ -425,7 +448,12 @@ class IndexPage extends react__WEBPACK_IMPORTED_MODULE_1__["Component"] {
       fontWeight: 500,
       boxShadow: 'none !important'
     };
-    return __jsx(_containers_Layout__WEBPACK_IMPORTED_MODULE_2__["default"], {
+
+    if (roomID.length > 0) {
+      document.getElementById('createRoomBtn').style.display = 'none';
+    }
+
+    return __jsx(_containers_Layout__WEBPACK_IMPORTED_MODULE_3__["default"], {
       pageTitle: "Realtime Chat"
     }, __jsx("main", {
       className: "container-fluid position-absolute h-100 bg-dark"
@@ -437,21 +465,29 @@ class IndexPage extends react__WEBPACK_IMPORTED_MODULE_1__["Component"] {
       className: "px-5 mx-5"
     }, __jsx("span", {
       className: "d-block w-100 h1 text-light"
-    }, user ? __jsx("span", null, __jsx("span", {
+    }, user ? __jsx(react__WEBPACK_IMPORTED_MODULE_1__["Fragment"], null, __jsx("span", null, __jsx("span", {
       style: {
         color: '#999'
       }
-    }, "Hello!"), "\xA0", user) : 'What is your name?'), !user && __jsx("input", {
+    }, "Hello!"), "\xA0", user), __jsx("button", {
+      type: "button",
+      id: "createRoomBtn",
+      className: "btn btn-light mt-5",
+      onClick: this.createRoom,
+      style: {
+        display: 'block'
+      }
+    }, "Create Room"), roomID.length > 0 && __jsx("button", {
+      type: "button",
+      className: "btn btn-outline-primary btn-block mt-5",
+      onClick: () => this.toCreatedRoom(roomID)
+    }, window.location.href + `${roomID}`)) : 'What is your name?'), !user && __jsx("input", {
       type: "text",
       className: "form-control mt-3 px-3 py-2",
       onKeyUp: this.handleKeyUp,
       autoComplete: "off",
       style: nameInputStyles
-    }))), __jsx("section", {
-      className: "col-md-4 postion-relative d-flex flex-wrap h-100 align-items-start align-content-between bg-white px-0"
-    }, user && __jsx(_components_Chat__WEBPACK_IMPORTED_MODULE_3__["default"], {
-      activeUser: user
-    })))));
+    }))))));
   }
 
 }
@@ -513,6 +549,17 @@ module.exports = require("core-js/library/fn/string/from-code-point");
 /***/ (function(module, exports) {
 
 module.exports = require("next/head");
+
+/***/ }),
+
+/***/ "next/router":
+/*!******************************!*\
+  !*** external "next/router" ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("next/router");
 
 /***/ }),
 
